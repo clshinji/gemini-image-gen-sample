@@ -27,9 +27,10 @@
     cd gemini-2-5-flash-image
     ```
 
-2.  **必要なライブラリをインストールします。**
+2.  **uvをインストールし、必要なライブラリをインストールします。**
     ```bash
-    pip install -r requirements.txt
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+    uv pip install -r requirements.txt
     ```
 
 3.  **環境変数を設定します。**
