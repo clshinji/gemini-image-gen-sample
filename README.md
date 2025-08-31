@@ -36,10 +36,11 @@
     ```
 
 3.  **環境変数を設定します。**
-    `.env.sample` ファイルをコピーして `.env` を作成し、ご自身のGoogle CloudプロジェクトIDを記述してください。
+    `.env.sample` ファイルをコピーして `.env` を作成し、ご自身のGoogle Cloudプロジェクトの情報を記述してください。
 
-    ```
-    GOOGLE_APPLICATION_CREDENTIALS="your-gcp-credentials.json"
+    ```dotenv
+    PROJECT_ID="your-gcp-project-id"
+    GOOGLE_APPLICATION_CREDENTIALS="secrets/your-key-file.json"
     ```
 
 4.  **Streamlitアプリケーションを実行します。**
@@ -49,8 +50,7 @@
 
 ## 設定
 
-*   `PROJECT_ID`: ご自身のGoogle CloudプロジェクトIDに書き換えてください。
-*   `MODEL_ID`: 使用するモデルIDです。デフォルトは `gemini-2.5-flash-image-preview` です。
+*   `MODEL_ID`: `app.py`で、使用するモデルIDを変更できます。デフォルトは `gemini-2.5-flash-image-preview` です。
 
 ## 使い方
 

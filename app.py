@@ -1,4 +1,5 @@
 from dotenv import load_dotenv
+
 load_dotenv()
 
 import streamlit as st
@@ -8,7 +9,7 @@ import os
 import time
 
 # Initialize Vertex AI
-PROJECT_ID = "gen-lang-client-0112356509"
+PROJECT_ID = os.getenv("PROJECT_ID")
 LOCATION = "global"
 client = genai.Client(vertexai=True, project=PROJECT_ID, location=LOCATION)
 MODEL_ID = "gemini-2.5-flash-image-preview"
@@ -47,7 +48,9 @@ if prompt := st.chat_input("What is up?"):
     content = [prompt]
     if uploaded_file is not None:
         image_data = uploaded_file.getvalue()
-        image_part = Part(inline_data=Blob(data=image_data, mime_type=uploaded_file.type))
+        image_part = Part(
+            inline_data=Blob(data=image_data, mime_type=uploaded_file.type)
+        )
         content.append(image_part)
 
     # Generate image
@@ -60,7 +63,7 @@ if prompt := st.chat_input("What is up?"):
                 candidate_count=1,
             ),
         )
-        
+
         # Display assistant response in chat message container
         with st.chat_message("assistant"):
             assistant_response_parts = []
@@ -71,22 +74,26 @@ if prompt := st.chat_input("What is up?"):
                 elif part.inline_data:
                     image_data = part.inline_data.data
                     mime_type = part.inline_data.mime_type
-                    extension = mime_type.split('/')[-1]
-                    
+                    extension = mime_type.split("/")[-1]
+
                     # Sanitize extension
-                    if extension not in ['png', 'jpg', 'jpeg', 'gif', 'webp']:
-                        extension = 'png' # default to png if mime type is weird
+                    if extension not in ["png", "jpg", "jpeg", "gif", "webp"]:
+                        extension = "png"  # default to png if mime type is weird
 
                     filename = f"temp_images/img_{int(time.time_ns())}.{extension}"
-                    
+
                     with open(filename, "wb") as f:
                         f.write(image_data)
-                        
-                    st.image(image_data, caption=f"Generated Image (saved as {filename})")
+
+                    st.image(
+                        image_data, caption=f"Generated Image (saved as {filename})"
+                    )
                     assistant_response_parts.append({"image": image_data})
 
         # Add assistant response to chat history
-        st.session_state.messages.append({"role": "assistant", "content": assistant_response_parts})
+        st.session_state.messages.append(
+            {"role": "assistant", "content": assistant_response_parts}
+        )
 
     except Exception as e:
         st.error(f"An error occurred: {e}")
