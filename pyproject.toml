@@ -1,0 +1,8 @@
+[project]
+name = "gemini-2-5-flash-image"
+version = "0.1.0"
+dependencies = [
+    "streamlit",
+    "google-genai",
+    "python-dotenv",
+]
