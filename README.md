@@ -27,10 +27,12 @@
     cd gemini-2-5-flash-image
     ```
 
-2.  **uvをインストールし、必要なライブラリをインストールします。**
+2.  **uvをインストールし、仮想環境を作成してライブラリをインストールします。**
     ```bash
     curl -LsSf https://astral.sh/uv/install.sh | sh
-    uv pip install -r requirements.txt
+    uv venv
+    source .venv/bin/activate
+    uv sync
     ```
 
 3.  **環境変数を設定します。**
